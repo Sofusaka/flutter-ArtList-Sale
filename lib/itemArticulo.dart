@@ -4,6 +4,8 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:quiz2/fichaArticulo.dart';
 
 
 
@@ -39,6 +41,7 @@ class _ProductoSingleState extends State<ProductoSingle> {
   double valoracionfinal = 0;
    late String sDescuento; 
    late double fDescuento;
+   late double fprecio;
   
   @override
   void initState() {
@@ -46,6 +49,7 @@ class _ProductoSingleState extends State<ProductoSingle> {
     valoracionfinal = widget.valoracion / 10;
      sDescuento=widget.descuento.split("%")[0];
      fDescuento = (100-int.parse(sDescuento))/100;
+     fprecio=widget.precio*fDescuento;
   }
 
   @override
@@ -95,7 +99,22 @@ Widget _buildOferta() {
                     itemSize: 25.0,
                     
                 ),
-              
+                
+                ElevatedButton(
+                  onPressed: () => Get.toNamed('/FichaArticulo', arguments: {
+                    'img': widget.img,
+                    'nombre': widget.nombre,
+                    'precio': widget.precio,
+                    'calificacion': widget.calificacion,
+                    'valoracion': widget.valoracion,
+                    'descripcion': widget.descripcion,
+                    'descuento': widget.descuento,
+                    'isOferta': widget.isOferta,
+                    'valoracionfinal': valoracionfinal,
+                    'fprecio': fprecio,
+                  }),
+                  child: Text('ver mas'),
+                )
             ],
           ),
         ),
@@ -125,7 +144,33 @@ Widget _buildOferta() {
                       ),
                                     
                 "\$${widget.precio}"),
-              RatingBarIndicator(
+                estrellas(valoracionfinal),
+                ElevatedButton(
+                  onPressed: () => Get.toNamed('/FichaArticulo', arguments: {
+                    'img': widget.img,
+                    'nombre': widget.nombre,
+                    'precio': widget.precio,
+                    'calificacion': widget.calificacion,
+                    'valoracion': widget.valoracion,
+                    'descripcion': widget.descripcion,
+                    'descuento': widget.descuento,
+                    'isOferta': widget.isOferta,
+                    'valoracionfinal': valoracionfinal,
+                  }),
+                  child: Text('ver mas'),
+                )
+              
+              
+            ],
+          ),
+        ),
+        
+      ],
+    );
+  }
+
+  Widget estrellas(double valoracionfinal) {
+      return RatingBarIndicator(
                     rating: valoracionfinal,
                     itemBuilder: (context, index) => const Icon(
                         Icons.star,
@@ -134,14 +179,8 @@ Widget _buildOferta() {
                     itemCount: 5,
                     itemSize: 25.0,
                     
-                ),
-              
-            ],
-          ),
-        ),
-        
-      ],
-    );
+                );
+
   }
 }
 

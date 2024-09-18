@@ -25,7 +25,7 @@ class _RutasArticulosState extends State<RutasArticulos> {
       getPages: [
         GetPage(name: '/Articulos', page: () => ListaArticulos()),
         GetPage(name: '/Homepage', page: () => Homepage()),
-        //GetPage(name:'/FichaArticulo', page:()=>FichaArticulo()),
+        GetPage(name: '/FichaArticulo', page: () => FichaArticulo()),
         GetPage(name: '/ArticulosOfertas', page:()=> ListaArticulosOfertas()),
       ],
     );
